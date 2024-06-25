@@ -10,7 +10,7 @@ const ColorContrast = () => {
       
       {/* Bad example */}
       <div className="bg-yellow-200 p-4 mb-6">
-        <p className="text-yellow-400">This text has poor contrast with its background, making it hard to read.</p>
+        <p className="text-yellow-800">This text has poor contrast with its background, making it hard to read.</p>
       </div>
 
       {/* Good example */}
