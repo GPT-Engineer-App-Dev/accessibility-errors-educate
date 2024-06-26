@@ -22,101 +22,102 @@ const fromSupabase = async (query) => {
 
 /* supabase integration types
 
-### foos
+### events
 
-| name    | type | format | required |
-|---------|------|--------|----------|
-| id      | int8 | number | true     |
-| title   | text | string | true     |
-| date    | date | string | true     |
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| name       | text        | string | true     |
+| created_at | timestamptz | string | true     |
+| date       | date        | string | true     |
 
-### bars
+### users
 
-| name    | type | format | required |
-|---------|------|--------|----------|
-| id      | int8 | number | true     |
-| foo_id  | int8 | number | true     |  // foreign key to foos
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| username   | text        | string | true     |
+| email      | text        | string | true     |
+| created_at | timestamptz | string | true     |
 
 */
 
-// Hooks for foos table
-export const useFoos = () => useQuery({
-    queryKey: ['foos'],
-    queryFn: () => fromSupabase(supabase.from('foos').select('*')),
+export const useEvents = () => useQuery({
+    queryKey: ['events'],
+    queryFn: () => fromSupabase(supabase.from('events').select('*')),
 });
 
-export const useFoo = (id) => useQuery({
-    queryKey: ['foos', id],
-    queryFn: () => fromSupabase(supabase.from('foos').select('*').eq('id', id).single()),
+export const useEvent = (id) => useQuery({
+    queryKey: ['events', id],
+    queryFn: () => fromSupabase(supabase.from('events').select('*').eq('id', id).single()),
 });
 
-export const useAddFoo = () => {
+export const useAddEvent = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (newFoo) => fromSupabase(supabase.from('foos').insert([newFoo])),
+        mutationFn: (newEvent) => fromSupabase(supabase.from('events').insert([newEvent])),
         onSuccess: () => {
-            queryClient.invalidateQueries('foos');
+            queryClient.invalidateQueries('events');
         },
     });
 };
 
-export const useUpdateFoo = () => {
+export const useUpdateEvent = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (updatedFoo) => fromSupabase(supabase.from('foos').update(updatedFoo).eq('id', updatedFoo.id)),
+        mutationFn: (updatedEvent) => fromSupabase(supabase.from('events').update(updatedEvent).eq('id', updatedEvent.id)),
         onSuccess: () => {
-            queryClient.invalidateQueries('foos');
+            queryClient.invalidateQueries('events');
         },
     });
 };
 
-export const useDeleteFoo = () => {
+export const useDeleteEvent = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('foos').delete().eq('id', id)),
+        mutationFn: (id) => fromSupabase(supabase.from('events').delete().eq('id', id)),
         onSuccess: () => {
-            queryClient.invalidateQueries('foos');
+            queryClient.invalidateQueries('events');
         },
     });
 };
 
-// Hooks for bars table
-export const useBars = () => useQuery({
-    queryKey: ['bars'],
-    queryFn: () => fromSupabase(supabase.from('bars').select('*')),
+export const useUsers = () => useQuery({
+    queryKey: ['users'],
+    queryFn: () => fromSupabase(supabase.from('users').select('*')),
 });
 
-export const useBar = (id) => useQuery({
-    queryKey: ['bars', id],
-    queryFn: () => fromSupabase(supabase.from('bars').select('*').eq('id', id).single()),
+export const useUser = (id) => useQuery({
+    queryKey: ['users', id],
+    queryFn: () => fromSupabase(supabase.from('users').select('*').eq('id', id).single()),
 });
 
-export const useAddBar = () => {
+export const useAddUser = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (newBar) => fromSupabase(supabase.from('bars').insert([newBar])),
+        mutationFn: (newUser) => fromSupabase(supabase.from('users').insert([newUser])),
         onSuccess: () => {
-            queryClient.invalidateQueries('bars');
+            queryClient.invalidateQueries('users');
         },
     });
 };
 
-export const useUpdateBar = () => {
+export const useUpdateUser = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (updatedBar) => fromSupabase(supabase.from('bars').update(updatedBar).eq('id', updatedBar.id)),
+        mutationFn: (updatedUser) => fromSupabase(supabase.from('users').update(updatedUser).eq('id', updatedUser.id)),
         onSuccess: () => {
-            queryClient.invalidateQueries('bars');
+            queryClient.invalidateQueries('users');
         },
     });
 };
 
-export const useDeleteBar = () => {
+export const useDeleteUser = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('bars').delete().eq('id', id)),
+        mutationFn: (id) => fromSupabase(supabase.from('users').delete().eq('id', id)),
         onSuccess: () => {
-            queryClient.invalidateQueries('bars');
+            queryClient.invalidateQueries('users');
         },
     });
 };
